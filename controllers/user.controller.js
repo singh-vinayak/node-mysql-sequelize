@@ -1,4 +1,4 @@
-const { user, Sequelize } = require("./../models");
+const { user, Sequelize, project } = require("./../models");
 
 const Op = Sequelize.Op;
 
@@ -54,7 +54,12 @@ self.createUser = async (req, res) => {
  */
 self.getAll = async (req, res) => {
     try {
-        let data = await user.findAll({});
+        let data = await user.findAll({
+            include: [{
+                model: project,
+                as: 'projects'
+            }]
+        });
         return res.status(200).json({
             success: true,
             count: data.length,
@@ -85,7 +90,11 @@ self.get = async (req, res) => {
             {
                 where: {
                     id: id
-                }
+                },
+                include: [{
+                    model: project,
+                    as: 'projects'
+                }]
             }
         );
         if (data)

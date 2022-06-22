@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 
 const users = require('./routes/user.routes');
+const projects = require("./routes/project.routes");
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/users', users);
+app.use('/api/projects', projects);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
